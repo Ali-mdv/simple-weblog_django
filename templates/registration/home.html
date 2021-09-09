@@ -1,0 +1,94 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}لیست مقالات{% endblock %}
+
+
+{% block content %}
+  {% if object_list %}
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">لیست مقالات</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;float:left;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>عنوان</th>
+                  <th>آدرس</th>
+                  <th>عکس</th>
+                  <th>توضیحات</th>
+                  <th>نویسنده</th>
+                  <th>دسته بندی</th>                
+                  <th>زمان انتشار</th>
+                  <th>وضعیت</th>
+                  <th>ویژه</th>
+                </tr>
+              </thead>
+              {% for article in object_list %}
+                <tbody>
+                  <tr>
+                      {% if article.status in 'db'|make_list or user.is_superuser %}
+                        <td><a href="{% url 'account:update' article.pk %}">{{article.title}}</a></td>
+                      {% else %}
+                        <td>{{article.title}}</td>
+                      {% endif %}
+                      <td>{{article.slug}}</td>
+                      <td>{{article.picture_tag}}</td>
+                      <td>{{article.describtion|truncatewords:20|safe}}</td>
+                      <td>{{article.author.get_full_name}}</td>
+                      <td>{{article.category_to_str}}</td>
+                      <td>{{article.jpublish}}</td>
+                      <td>
+                        {% if article.status == 'p' %}
+                          <span class="badge badge-success">منتشر شده</span>
+                          <a class="badge" target="_blank" href="{% url 'article:detail' article.slug %}">نمایش در سایت</a>
+                        {% else %}
+                          {% if article.status == 'i' %}
+                            <span class="badge badge-primary">در حال بررسی</span>
+                          {% elif article.status == 'b' %}
+                            <span class="badge badge-warning">رد شده</span>
+                          {% elif article.status == 'd' %}
+                            <span class="badge badge-secondary">پیش نویس</span>
+                          {% endif %}
+                          <a class="badge" target='_blank' href="{% url 'article:preview' article.pk %}">پیش نمایش</a>
+                        {% endif %}
+                        <br>
+                        {% if user.is_superuser %}
+                          <a class="badge badge-danger" href="{% url 'account:delete' article.pk %}">حذف</a>
+                          <br>
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if article.is_special %}
+                          <i class="far fa-check-circle" style="color: green;"></i>
+                        {% else %}
+                          <i class="far fa-times-circle" style="color: red;"></i>
+                        {% endif %}
+                      </td>
+                  </tr>
+                </tbody>
+              {% endfor %}
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  {% else %}
+    <div class='alert alert-secondary'>
+      <span style='font-size: 20px;'>مقاله ای برای نمایش وجود ندارد.</span>
+    </div>
+  {% endif %}
+{% endblock %}

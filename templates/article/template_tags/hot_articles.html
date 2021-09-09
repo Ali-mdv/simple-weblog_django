@@ -1,0 +1,11 @@
+{% load humanize %}
+
+{% for article in articles %}       
+    <a href="{% url 'article:detail' article.slug %}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="w-100 justify-content-between">
+            <img src="{{article.picture.url}}" alt="" class="img-fluid float-left">
+            <h5 class="mb-1">{{article.title}}</h5>
+            <small>{{article.publish|naturaltime}}</small>
+        </div>
+    </a>
+{% endfor %}

@@ -1,0 +1,12 @@
+
+<a href="{% url link %}" class="nav-link {% if request.resolver_match.url_name == link_name %}active{% endif %}">
+    <i class="fa fa-{{icon}} nav-icon"></i>
+    <p>
+        {{content}}
+
+        {% if link_name == 'profile' %}
+            <span class="right badge badge-danger">New</span>
+        {% endif %}
+    </p>
+    
+</a>

@@ -1,0 +1,154 @@
+{% extends 'article/base.html' %}
+
+{% load base_tags %}
+{% load humanize %}
+
+{% block content %}
+    <section class="section first-section">
+        <div class="container-fluid">
+            <div class="masonry-blog clearfix">
+                {% best_articles %}
+            </div><!-- end masonry -->
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page-wrapper">
+                        {% for article in object_list %}
+                            <div class="blog-list clearfix">
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{% url 'article:detail' article.slug %}" title="">
+                                                <img src="{{article.picture.url}}" alt="" class="img-fluid">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="{% url 'article:detail' article.slug %}" title="">{{article.title}}</a></h4>
+                                        <p>{{article.describtion|truncatewords:40|striptags}}</p>
+                                        <small class="firstsmall">
+                                            {% for cat in article.category.active %}
+                                                <a class="bg-orange" href="{% url 'article:category' cat.slug %}" title="">{{cat}}</a>
+                                            {% endfor %}
+                                        </small>
+                                        <small>{{article.publish|naturaltime}}</small>
+                                        <small><a href="{% url 'article:author' article.author %}" title="">{{article.author.get_full_name}}</a></small>
+                                        <small><i class="fa fa-eye"></i> {{article.hits.count}}</small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                                <hr class="invis">
+                            </div><!-- end blog-list -->
+                        {% empty %}
+                            <div class="blog-list clearfix">
+                                <div class="alert alert-warning">
+                                    <h3>مطلبی برای نمایش وجود ندارد.</h3>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- end page-wrapper -->
+
+                    <hr class="invis">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-start">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{% url 'article:home' page_obj.previous_page_number %}">Prev</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{% url 'article:home' page_obj.next_page_number %}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                </div><!-- end col -->
+
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+                        <div class="widget">
+                            <div class="banner-spot clearfix">
+                                <div class="banner-img">
+                                    <img src="upload/banner_07.jpg" alt="" class="img-fluid">
+                                </div><!-- end banner-img -->
+                            </div><!-- end banner -->
+                        </div><!-- end widget -->
+
+
+                        <div class="widget">
+                            <h2 class="widget-title">مقالات برتر</h2>
+                            <div class="blog-list-widget">
+                                <div class="list-group">
+                                    {% top_articles %}
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div><!-- end widget -->
+
+                        <div class="widget">
+                            <h2 class="widget-title">پربازدید ترین مقالات ماه</h2>
+                            <div class="blog-list-widget">
+                                {% popular_articles %}
+                                <div class="list-group">
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div><!-- end widget -->
+
+                        <div class="widget">
+                            <h2 class="widget-title">مقالات داغ ماه</h2>
+                            <div class="blog-list-widget">
+                                <div class="list-group">
+                                    {% hot_articles %}
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div><!-- end widget -->
+
+                        <div class="widget">
+                            <h2 class="widget-title">Follow Us</h2>
+
+                            <div class="row text-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                    <a href="#" class="social-button facebook-button">
+                                        <i class="fa fa-facebook"></i>
+                                        <p>27k</p>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                    <a href="#" class="social-button twitter-button">
+                                        <i class="fa fa-twitter"></i>
+                                        <p>98k</p>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                    <a href="#" class="social-button google-button">
+                                        <i class="fa fa-google-plus"></i>
+                                        <p>17k</p>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                    <a href="#" class="social-button youtube-button">
+                                        <i class="fa fa-youtube"></i>
+                                        <p>22k</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- end widget -->
+                    </div><!-- end sidebar -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+{% endblock %}

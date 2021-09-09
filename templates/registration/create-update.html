@@ -1,0 +1,70 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}افزودن مقالات{% endblock %}
+
+
+
+{% block content %}
+	<div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Quick Example</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form enctype="multipart/form-data" method="post">{% csrf_token %}
+	          	<div class="card-body">
+	              <div class="form-row">
+	              	<div class="form-group col-6">
+	                	{{form.title|as_crispy_field}}
+	              	</div>
+	              	<div class="form-group col-6">
+	                	{{form.slug|as_crispy_field}}
+	              	</div>
+	              	<div class="form-group col-12">
+	                	{{form.describtion|as_crispy_field}}
+	              	</div>
+	              	<div class="form-group col-6">
+	                	{{form.category|as_crispy_field}}
+	              	</div>
+	              	<div class="form-group col-6">
+	                	{{form.picture|as_crispy_field}}
+	                	{{form.publish|as_crispy_field}}
+	              	</div>
+	              	<div class="form-group col-6">
+		                	{{form.video|as_crispy_field}}
+		              </div>
+	              	<div class="form-group col-6">
+		                	{{form.is_special|as_crispy_field}}
+		              </div>
+
+	              	{% if user.is_superuser %}
+		              	<div class="form-group col-6">
+		                	{{form.status|as_crispy_field}}
+		              	</div>
+		              	<div class="form-group col-6">
+		                	{{form.author|as_crispy_field}}
+		              	</div>
+		              {% else %}
+			              <div class="form-group col-6">
+			              	<select name="status" class="select form-control" id="id_status">
+			              	   <option value="d" selected="">پیش نویس</option>
+			              	   <option value="i">ارسال برای بررسی</option>
+			              	</select>
+			              </div>
+		              {% endif %}
+	              </div>
+		        </div>
+	            <div class="card-footer">
+	              <button type='submit' class="btn btn-primary">Submit</button>
+	              {% if request.resolver_match.url_name == 'update' and request.user.is_superuser %}
+	              	<a class='btn btn-danger' href="{% url 'account:delete' article.pk %}">حذف</a>
+	             	{% endif %}
+	            </div>
+          </form>
+        </div>
+    </div>
+{% endblock %}

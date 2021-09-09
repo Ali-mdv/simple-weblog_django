@@ -1,0 +1,11 @@
+
+{% for cat in category %}
+    {% if cat.parent == None %}
+        <a href="{% url 'article:category' cat.slug %}"><button class="tablinks active" 
+            onclick="openCategory(event, 'cat01')">{{cat.title}}
+        </button></a>
+        {% if cat.children.active %}
+            {% include 'article/template_tags/category_loop.html' %}
+        {% endif %}
+    {% endif %}
+{% endfor %}

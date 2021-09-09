@@ -1,0 +1,19 @@
+{% extends 'registration/base.html' %}
+
+
+{% block title %}حذف مقالات{% endblock %}
+
+
+
+{% block content %}
+<div class="timeline-item">
+    <form method="post">{% csrf_token %}
+        <div class="timeline-body">
+            <p>آیا از حذف مقاله  "{{ object }}" مطمين هستید؟</p>
+        </div>
+        <div class="timeline-footer">
+            <input class='btn btn-danger' type="submit" value="Confirm">
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+
+{% for cat in cat.children.active %}
+    <a href="{% url 'article:category' cat.slug %}"><button class="tablinks active" 
+        onclick="openCategory(event, 'cat01')">{{cat.title}}
+    </button></a>
+    {% if cat.children.all %}
+        {% include 'article/template_tags/category_loop.html' %}
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,18 @@
+{% extends 'article/base_list.html' %}
+
+
+{% block cat_title %}
+    <h3 class="alert alert-primary text-center">متن جست و جو : {{search}}</h3>
+    <hr class="my-4" />
+{% endblock %}
+
+{% block next %}
+    {% url 'article:search' page_obj.previous_page_number %}?q={{search}}
+{% endblock %}
+
+{% block prev %}
+    {% url 'article:search' page_obj.next_page_number %}?q={{search}}
+{% endblock %}
+
+
+

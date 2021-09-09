@@ -1,0 +1,53 @@
+{% if popular_article %}
+    <div class="first-slot">
+        <div class="masonry-box post-media">
+             <img src="{{popular_article.picture.url}}" alt="" class="img-fluid">
+             <div class="shadoweffect">
+                <div class="shadow-desc">
+                    <div class="blog-meta">
+                        <span class="bg-orange">{{popular_article.category_to_str}}</span>
+                        <h4><a href="{% url 'article:detail' popular_article.slug %}" title="">{{popular_article.title}}</a></h4>
+                        <small>{{popular_article.jpublish}}</small>
+                        <small><a href="{% url 'article:author' popular_article.author %}" title="">{{popular_article.author.get_full_name}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end shadow-desc -->
+            </div><!-- end shadow -->
+        </div><!-- end post-media -->
+    </div><!-- end first-side -->
+{% endif %}
+
+{% if top_article %}
+    <div class="second-slot">
+        <div class="masonry-box post-media">
+             <img src="{{top_article.picture.url}}" alt="" class="img-fluid">
+             <div class="shadoweffect">
+                <div class="shadow-desc">
+                    <div class="blog-meta">
+                        <span class="bg-orange">{{top_article.category_to_str}}</span>
+                        <h4><a href="{% url 'article:detail' top_article.slug %}" title="">{{top_article.title}}</a></h4>
+                        <small>{{top_article.jpublish}}</small>
+                        <small><a href="{% url 'article:author' top_article.author %}" title="">{{top_article.author.get_full_name}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end shadow-desc -->
+             </div><!-- end shadow -->
+        </div><!-- end post-media -->
+    </div><!-- end second-side -->
+{% endif %}
+
+{% if hot_article %}
+    <div class="second-slot">
+        <div class="masonry-box post-media">
+             <img src="{{hot_article.picture.url}}" alt="" class="img-fluid">
+             <div class="shadoweffect">
+                <div class="shadow-desc">
+                    <div class="blog-meta">
+                        <span class="bg-orange">{{hot_article.category_to_str}}</span>
+                        <h4><a href="{% url 'article:detail' hot_article.slug %}" title="">{{hot_article.title}}</a></h4>
+                        <small>{{hot_article.jpublish}}</small>
+                        <small><a href="{% url 'article:author' hot_article.author %}" title="">{{hot_article.author.get_full_name}}</a></small>
+                    </div><!-- end meta -->
+                </div><!-- end shadow-desc -->
+             </div><!-- end shadow -->
+        </div><!-- end post-media -->
+    </div><!-- end second-side -->
+{% endif %}

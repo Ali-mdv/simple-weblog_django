@@ -43,8 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'user.apps.UserConfig',
     'article.apps.ArticleConfig',
+    'api.apps.ApiConfig',
+
     'extentions',
     'widget_tweaks',
     'crispy_forms',
@@ -52,6 +55,16 @@ INSTALLED_APPS = [
     'comment',
     'star_ratings',
     'django.contrib.humanize',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +177,29 @@ EMAIL_PORT = config('EMAIL_PORT')
 
 
 STAR_RATINGS_STAR_HEIGHT = 20
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ]
+}
+
+
+SITE_ID = 1
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'accress'
+JWT_AUTH_REFRESH_COOKIE = 'refresh'

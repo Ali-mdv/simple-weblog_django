@@ -1,5 +1,5 @@
 from django.urls import path, re_path ,include
-from .views import (home, json_content, detail, category,
+from .views import (home, detail, category,
                    Home, Detail, CategoryView, AuthorView,
                    Preview, SearchList)
 
@@ -9,8 +9,6 @@ urlpatterns = [
     # path('page/<int:page>',home,name='home'),
     path('',Home.as_view(),name='home'),
     path('page/<int:page>',Home.as_view(),name='home'),
-
-    path('json_content/',json_content,name='home2'),
 
     # path('article/<slug:slug>',detail,name='detail'),
     path('article/<slug:slug>',Detail.as_view(),name='detail'),

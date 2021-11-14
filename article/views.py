@@ -33,19 +33,6 @@ class Home(ListView):
 
 #====================================================================================
 
-def json_content(request):
-    articles = Article.objects.published()
-    for article in articles:
-        dict_article = {}
-        dict_article['author'] = article.author.get_full_name()
-        dict_article['title'] = article.title
-        dict_article['category'] = article.category_to_str()
-        dict_article['describtion'] = article.safe_descibtion()
-    return JsonResponse(dict_article, safe=True, json_dumps_params={'ensure_ascii': False})
-
-
-#====================================================================================
-
 def detail(request,slug):
     article = get_object_or_404(Article,slug=slug,status='p')
     context = {
